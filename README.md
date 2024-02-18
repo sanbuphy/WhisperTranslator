@@ -9,18 +9,19 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 应用输出文件为ass或srt格式，内置指定字幕组的字幕格式，可直接导入 [Aegisub](https://github.com/Aegisub/Aegisub) 进行后续翻译及时间轴校正。你可以根据选项决定是否启动全文摘录和总结。
 
 ## 最近更新:
-由于个人比较忙，此项目仍然只能不定期进行维护和更新，感谢各位。
 
 2024.2.20:
 * release初版，提供转录和输出为分割文章。
 
 
 ## 如何使用
-* [点击这里](https://colab.research.google.com/github/Ayanaminn/N46Whisper/blob/main/N46Whisper.ipynb) 在Google Colab中打开应用.
+
+* [点击这里](https://colab.research.google.com/github/sanbuphy/WhisperTranslator/blob/main/WhisperTranslator_colab.ipynb) 在Google Colab中打开应用.
 * 上传要识别的文件并运行应用
 * 识别完成后ass文件会自动下载到本地.
 
 ## AI翻译
+
 应用现在可以使用AI翻译工具对转录的文本进行逐行翻译。
 
 用户也可以单独上传srt或ass文件来使用翻译模块。
