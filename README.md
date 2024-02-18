@@ -1,104 +1,63 @@
-# N46Whisper
+# WhisperTranslator
 
-Language : English | [简体中文](./README_CN.md) 
+Language : [English](./README.md)  | 简体中文
 
-N46Whisper is a Google Colab notebook application that developed for streamlined video subtitle file generation to improve productivity of Nogizaka46 (and Sakamichi groups) subbers.
+WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper) 的应用。开发初衷旨在提高各类外文视频的转录、翻译、总结效率。
 
-The notebook is based on [faster-whisper](https://github.com/guillaumekln/faster-whisper), a reimplementation of OpenAI's [Whisper](https://github.com/openai/whisper) , a general-prupose speech recognition model.
-This implementation is up to 4 times faster than original Whisper for the same accuracy while using less memory.
+此应用基于AI语音识别模型 [Whisper](https://github.com/openai/whisper)的优化部署 [faster-whisper](https://github.com/guillaumekln/faster-whisper).
 
-The output file will be in Advanced SubStation Alpha(ass) format with built-in style of selected sub group so it can be directly imported into [Aegisub](https://github.com/Aegisub/Aegisub) for subsequent editing.
+应用输出文件为ass或srt格式，内置指定字幕组的字幕格式，可直接导入 [Aegisub](https://github.com/Aegisub/Aegisub) 进行后续翻译及时间轴校正。你可以根据选项决定是否启动全文摘录和总结。
 
-## What's Latest：
+## 最近更新:
+由于个人比较忙，此项目仍然只能不定期进行维护和更新，感谢各位。
 
-This projuct can only be maintained and updated irregularly due to perosonal busyness. Thank you.
-
-2024.1.31:
-* [N46WhisperLite](https://colab.research.google.com/github/Ayanaminn/N46Whisper/blob/dev/N46WhisperLite.ipynb) is available for daily tasks that do not need advanced settings.
-
-2023.12.4:
-* Add support for v3 model based on faster-whisper
-
-2023.11.7:
-* Enable users to load lastest Whisper V3 model.
-* Enable customerize beam size parameter.
+2024.2.20:
+* release初版，提供转录和输出为分割文章。
 
 
-## How to use
-* [Click here](https://colab.research.google.com/github/Ayanaminn/N46Whisper/blob/main/N46Whisper.ipynb) to open the notebook in Google Colab.
-* Upload file and follow the instruction to run the notebook.
-* The subtitle file will be automatically downloaded once done.
+## 如何使用
+* [点击这里](https://colab.research.google.com/github/Ayanaminn/N46Whisper/blob/main/N46Whisper.ipynb) 在Google Colab中打开应用.
+* 上传要识别的文件并运行应用
+* 识别完成后ass文件会自动下载到本地.
 
-## AI translation
-The notebook now allow users to translate transcribed subtitle text line by line using AT translation tools.
+## AI翻译
+应用现在可以使用AI翻译工具对转录的文本进行逐行翻译。
 
-Users can also upload local subtitle files or select files from google drive for translation.
+用户也可以单独上传srt或ass文件来使用翻译模块。
 
-Currently, it supports `chatGPT` translation. 
+目前支持`chatGPT` 的翻译（正在做抽象接口以便支持所有其他的llm）
 
-The translated text will be append in the same line after the original text and sepearted by `/N`, such that a new bilingual subtitle file is generated.
+翻译后的文本将于原文合并在一行，以 `/N`分割，生成双语对照字幕。
 
-For instance: 
+例如: 
 
 ![QQ截图20230312155700](https://user-images.githubusercontent.com/49441654/224525469-18a43cbc-33b9-4b2f-b7ca-7ae0c1865b17.png)
 
-An example of bilingual subtitle:
+双语字幕效果为:
 
 ![QQ截图20230312160015](https://user-images.githubusercontent.com/49441654/224525526-51e2123c-6e1c-427c-8d67-9ccd4a7e6630.png)
 
-To use the AI translation, users must use their own OpenAI API Key. To obtain a free Key, go to https://platform.openai.com/account/api-keys
+用户需要自己的OpenAI API Key来使用翻译功能. 要生成免费的Key，进入自己账户设定 https://platform.openai.com/account/api-keys
 
-Please note there will be limitaions on usage for free keys, choose a paid plan to speed up at your own cost.
+## 对字幕的自动分行
+当一行中有若干句话时，用户可选择按空格分割成多行。分割后的若干行均临时采用原行相同的时间戳，且添加了adjust_required标记提示调整时间戳避免叠轴。
 
-## Split lines
-Users can choose to split text in a single line by space.The child lines will have same time stamp with the parent line, respectively.
+普通分割只有在单（词）句字符长度大于5时才进行分割：
+分割前：
 
-For instance, for a line contains multiple long sentences:
->Dialogue: 0,0:01:00.52,0:01:17.52,default,,0,0,0,,Birthday Liveについて話そうかなと思います よろしくお願いします
+![No](https://user-images.githubusercontent.com/49441654/225230578-2977511d-324f-463f-b783-fa9251df8e9f.PNG)
 
-After split:
->Dialogue: 0,0:01:00.52,0:01:17.52,default,,0,0,0,,Birthday Liveについて話そうかなと思います(adjust_required)
+分割后：
 
->Dialogue: 0,0:01:00.52,0:01:17.52,default,,0,0,0,,ろしくお願いします(adjust_required)
+![Modest](https://user-images.githubusercontent.com/49441654/225230645-efe8b26a-3392-4234-ad3f-f9b8d4e95d10.PNG)
 
-## Update history：
+可以看到，尤其以第7行为例，短句和语气词被保留，只有长句被分割。字符长度5为默认值，一般来说日语大部分短句和语气词都可以过滤掉。
 
-2023.4.30:
-* Refine the translation prompt.
-* Allow user to custom prompt and temperature for translation.
-* Display the token used and total cost for the translation task.
+全面分割则是对任何空格都另起一行，分割后：
 
-2023.4.15:
-* Reimplement Whsiper based on faster-whisper to improve efficiency
-* Enable vad filter that integrated within faster-whisper to improve transcribe accuracy
-2023.4.10:
-* Support for select/upload multiple files to batch process.
+![Aggre](https://user-images.githubusercontent.com/49441654/225231063-3e60561b-a821-4c61-8c8e-4ce53e6c1a12.PNG)
 
-2023.4.1:
-* Update workflow, use pysubs2 library instead of Whisper WriteSRT class for sub file manipulation.
-* Support upload srt or ass file to use AI translation function independently, support display translation progress.
-* Update documents and other minor fixes.
 
-2023.3.15:
-* Add functions to split multiple words/sententces in one line.
-* Update documents and other minor fixes.
+此外可以看到，在两种情况下英文单字都不会被分割。
 
-2023.3.12:
-* Add chatGPT translation and bilingual subtitle file generation features.
-* Update documents and other minor fixes.
-
-2023.01.26：
-* Update scripts to reflect recent changes in Whisper.
-
-2022.12.31：
-* Allow user to select files directly from mounted google drive.
-* Other minor fixes.
-
-## Support
-The application could significantly reduce the labour and time costs of sub-groups or individual subbers. However, despite its impressive performance, the Whisper model and the application itself are not without limitations.Please read the orgininal documents and Discussions to learn more about the usage of Whisper and the common issues.
-
-However, if you have any throughts, requests or questions that directly related to making subtitiles for Sakamichi group girls, please feel free to post here or [contact me](mailto:admin@ikedateresa.cc)
-
-## License
-The code is released under the MIT license. See [License](./LICENSE.md) for details.
-
+## 更新日志
