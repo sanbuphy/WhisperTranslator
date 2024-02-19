@@ -1,0 +1,5 @@
+ffmpeg
+pysubs2
+faster-whisper
+python-dotenv
+pytorch
