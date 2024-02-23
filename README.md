@@ -16,9 +16,28 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 ## 如何使用
 
-* [点击这里](https://colab.research.google.com/github/sanbuphy/WhisperTranslator/blob/main/WhisperTranslator_colab.ipynb) 在Google Colab中打开应用.
-* 上传要识别的文件并运行应用
-* 识别完成后ass文件会自动下载到本地.
+- 基于本地的使用（推荐）：
+
+    - [根据该文件的引导一步步完成环境安装和运行](WhisperTranslator_local.ipynb)
+
+- 基于Google Colab的使用：
+
+    - [点击这里](https://colab.research.google.com/github/sanbuphy/WhisperTranslator/blob/main/WhisperTranslator_colab.ipynb) 在Google Colab中打开应用.
+    - 上传要识别的文件并运行应用
+    - 识别完成后ass文件会自动下载到本地.
+
+- 有关AI功能的使用（可选）：
+
+    - 如果你选择了AI相关工具（AI翻译、AI总结），且使用的是online的api，则你需要按照不同的token命名写入到当前文件夹的`.env`文件夹下，其中各环境变量命名方式参考下列方式（约定为下列命名）：
+    ```
+    OPENAI_API_KEY=
+    OPENAI_API_BASE=
+    ZHIPUAI_API_KEY=
+    BAIDU_API_KEY=
+    ```
+
+    - 如果你使用的是local的AI工具，只需要等待模型下载完成后运行即可。
+
 
 ## AI翻译
 

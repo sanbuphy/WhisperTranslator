@@ -3,3 +3,6 @@ pysubs2
 faster-whisper
 python-dotenv
 pytorch
+
+# 根据需求可选
+# openai

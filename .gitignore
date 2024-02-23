@@ -2,4 +2,4 @@
 hf-cache/*
 temp/*
 __pycache__/*
-
+.env
