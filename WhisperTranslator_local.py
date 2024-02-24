@@ -18,6 +18,7 @@ model_size = config['model_size']
 initial_prompt = config['initial_prompt']
 export_srt = config['export_srt']
 if_translate = config['if_translate']
+target_language = config['target_language']
 if_summary = config['if_summary']
 is_split = config['is_split']
 split_method = config['split_method']
@@ -153,8 +154,8 @@ for i in range(len(file_names)):
         from whispertranslator.llm import InternLM2,GenerationConfig
         internLM2 = InternLM2(session_len=8096)
         gen_config = GenerationConfig(top_k=20,top_p=0.3,temperature=0.1)
-        translator_system_prompt = """
-            把下列文字翻译成中文,修改和补充语序让他更符合中文习惯，只返回给我结果：
+        translator_system_prompt = f"""
+            把下列文字翻译成{target_language},修改和补充语序让他更符合{target_language}习惯，只返回给我结果：
             """
         summary_system_prompt = f"""
             总结下列文字的主题：

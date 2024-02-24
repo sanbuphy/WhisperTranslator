@@ -1,32 +1,43 @@
-# 基础参数设置
-work_dir = '修改你的地址'
-export_dir = './temp' # 推荐，默认输出地点
+# 基础参数设置 | Basic Parameter Settings
+work_dir = '修改你的地址' # 待处理文件所在文件夹 | Folder containing the files to be processed
+export_dir = './temp' # output folder
 file_type = "audio"
-language = "en" # 原文语言 zh en jp
+language = "en" # 原文语言 zh en jp | Original Language: zh en jp
 model_size = "large-v2"
-initial_prompt = '这个是一个讲座' # 原文内容，帮助更好的输出结果
+initial_prompt = '这个是一个讲座' # 描述原文内容，帮助更好的输出结果 | Describe the content of the original text to assist in generating better output.
 export_srt = "No"
 
 # 本地模型（若启用，请确保拥有>=10G的nvidia显卡）单独转录需要5G左右显存，如果显存不够可以把下面设置false
+# Local model (if enabled, please make sure you have an Nvidia graphics card with >= 10GB of VRAM). 
+# Transcribing individually requires approximately 5GB of VRAM. If you don't have enough VRAM,
+#  you can set the option below to false.
 if_translate = true
+target_language = "中文" # 输入你想要翻译的目标语言 | The target language you want to translate to.
 if_summary = true
 
-# 其他选项/Advanced settings（可以不管）
+# 其他选项（可以不管）/Advanced settings 
+# (You can disregard the following content.)
 
 # 将存在空格的单行文本分割为多行（多句）。分割后的若干行均临时采用相同时间戳，且添加了adjust_required标记提示调整时间戳避免叠轴
 # 普通分割（Modest): 当空格后的文本长度超过5个字符，则另起一行
 # 全部分割（Aggressive): 只要遇到空格即另起一行
+# Split single-line text with spaces into multiple lines (multiple sentences). The resulting lines temporarily have the same timestamp and are marked with an "adjust_required" flag to indicate the need for timestamp adjustment to avoid overlapping captions.
+# Modest Splitting: If the length of the text after a space exceeds 5 characters, start a new line.
+# Aggressive Splitting: Start a new line whenever a space is encountered.
 is_split = "No"  # @param ["No","Yes"]
 split_method = "Modest"  # @param ["Modest","Aggressive"]
+
 # 字幕格式（暂时默认default）
 sub_style = "default"
 
 # 使用VAD过滤/Use VAD filter
 # 使用[Silero VAD model](https://github.com/snakers4/silero-vad)以检测并过滤音频中的无声段落（推荐小语种使用）
-# 注意】使用VAD filter有优点亦有缺点，请用户自行根据音频内容决定是否启用. [关于VAD filter](https://github.com/Ayanaminn/N46Whisper/blob/main/FAQ.md)
+# 注意】使用VAD filter有优点亦有缺点，请用户自行根据音频内容决定是否启用. [about VAD filter](https://github.com/Ayanaminn/N46Whisper/blob/main/FAQ.md)
 is_vad_filter = "True" # @param ["True", "False"]
 
-# 设置Beam Size
+# Beam Size Setting
 # Beam Size数值越高，在识别时探索的路径越多，这在一定范围内可以帮助提高识别准确性，但是相对的VRAM使用也会更高. 同时，Beam Size在超过5-10后有可能降低精确性，详情请见https://arxiv.org/pdf/2204.05424.pdf
 # 默认设置为 5
+# A higher Beam Size value explores more paths during recognition, which can help improve recognition accuracy within a certain range. However, it also results in higher VRAM usage. Additionally, the accuracy may decrease when the Beam Size exceeds 5-10. For more details, please refer to https://arxiv.org/pdf/2204.05424.pdf.
+# The default setting is 5.
 set_beam_size = 5 
