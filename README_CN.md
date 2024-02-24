@@ -1,6 +1,6 @@
 # WhisperTranslator
 
-Language : [English](./README.md)  | 简体中文
+Language: [English](./README.md) | [简体中文](./README_CN.md)
 
 WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper) 的应用。开发初衷旨在提高各类外文视频的转录、翻译、总结效率。
 
@@ -8,22 +8,51 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 应用输出文件为ass或srt格式，内置指定字幕组的字幕格式，可直接导入 [Aegisub](https://github.com/Aegisub/Aegisub) 进行后续翻译及时间轴校正。你可以根据选项决定是否启动全文摘录和总结。
 
+
 ## 最近更新:
+
+2024.2.24:
+- 🤗支持本地大模型，使用[InternLM2 7B](https://github.com/InternLM/InternLM)自动翻译时间轴、翻译全文、总结全文。你只需要在一个 12G 显存的显卡上就可以运行`WhisperTranslator_local.py`的所有操作。
 
 2024.2.20:
 * release初版，提供转录和输出为分割文章。
 
-## 路线图:
 
-- [ ]  支持colab实现全流程
-- [ ]  支持多样化llm接口
-- [ ]  支持本地gpu、cpu运行
+## 环境安装
+
+- 如果你在本地运行，则需要运行 `pip install -r requirements.txt` 安装依赖,如果**你想运行本地大模型进行翻译、总结工作**，你需要额外安装大模型依赖 `pip install -r requirements_localllm.txt`
 
 ## 如何使用
 
-* [点击这里](https://colab.research.google.com/github/Ayanaminn/N46Whisper/blob/main/N46Whisper.ipynb) 在Google Colab中打开应用.
-* 上传要识别的文件并运行应用
-* 识别完成后ass文件会自动下载到本地.
+- 基于本地的使用（推荐）：
+
+    - 仅转录不翻译总结只需要6G的显存，若体验完整功能需要12G显存的显卡（ampere架构，也就是3060类的显卡），然后修改请修改配置文件 [local_whisper_config.toml](local_whisper_config.toml)，接着直接 python 运行 [WhisperTranslator_local.py](WhisperTranslator_local.py) 即可
+
+    - 运行结束后你可以得到：1、字幕文件和全文 2、翻译后的字幕文件和全文 3、全文摘要，当前默认放在翻译后的全文文件中
+
+    - 你可以根据需要选择是否开启翻译总结功能，具体请查看配置
+
+- 基于Google Colab的使用：
+
+    - [点击这里](https://colab.research.google.com/github/sanbuphy/WhisperTranslator/blob/main/WhisperTranslator_colab.ipynb) 在Google Colab中打开应用.
+    - 上传要识别的文件并运行应用
+    - 识别完成后ass文件会自动下载到本地.
+
+- 有关AI功能的使用（可选）：
+
+    - 如果你选择了AI相关工具（AI翻译、AI总结），且使用的是online的api，则你需要按照不同的token命名写入到当前文件夹的`.env`文件夹下，其中各环境变量命名方式参考下列方式（约定为下列命名）：
+    ```
+    OPENAI_API_KEY=
+    OPENAI_API_BASE=
+    ZHIPUAI_API_KEY=
+    BAIDU_API_KEY=
+    ```
+
+    - 如果你使用的是local的AI工具，只需要等待模型下载完成后运行即可。
+
+- 我只想使用本地大模型翻译和总结一个外国文章：
+
+    - 本项目提供了单独运行翻译和总结功能，不需要转录，你只需要修改 `summay_everything.py` 的原始文件和输出文件地址，并运行即可。
 
 ## AI翻译
 
@@ -31,7 +60,7 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 用户也可以单独上传srt或ass文件来使用翻译模块。
 
-目前支持`chatGPT` 的翻译（正在做抽象接口以便支持所有其他的llm）
+目前支持 InternLM2 的翻译
 
 翻译后的文本将于原文合并在一行，以 `/N`分割，生成双语对照字幕。
 
@@ -46,7 +75,6 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 用户需要自己的OpenAI API Key来使用翻译功能. 要生成免费的Key，进入自己账户设定 https://platform.openai.com/account/api-keys
 
 ## 对字幕的自动分行
-
 当一行中有若干句话时，用户可选择按空格分割成多行。分割后的若干行均临时采用原行相同的时间戳，且添加了adjust_required标记提示调整时间戳避免叠轴。
 
 普通分割只有在单（词）句字符长度大于5时才进行分割：
@@ -66,7 +94,3 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 
 此外可以看到，在两种情况下英文单字都不会被分割。
-
-## 更新日志
-
-TODO
