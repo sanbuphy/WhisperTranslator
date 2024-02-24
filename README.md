@@ -8,17 +8,29 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 应用输出文件为ass或srt格式，内置指定字幕组的字幕格式，可直接导入 [Aegisub](https://github.com/Aegisub/Aegisub) 进行后续翻译及时间轴校正。你可以根据选项决定是否启动全文摘录和总结。
 
+
 ## 最近更新:
+
+2024.2.24:
+- 支持本地大模型，使用[InternLM2 7B](https://github.com/InternLM/InternLM)自动翻译时间轴、翻译全文、总结全文。你只需要在一个 12G 显存的显卡上就可以运行`WhisperTranslator_local.py`的所有操作。
 
 2024.2.20:
 * release初版，提供转录和输出为分割文章。
 
 
+## 环境安装
+
+- 如果你在本地运行，则需要运行 `pip install -r requirements.txt` 安装依赖,如果你想运行本地大模型进行翻译、总结工作，你需要额外安装大模型依赖 `pip install -r requirements_localllm.txt`
+
 ## 如何使用
 
 - 基于本地的使用（推荐）：
 
-    - [根据该文件的引导一步步完成环境安装和运行](WhisperTranslator_local.ipynb)
+    - 仅转录不翻译总结只需要6G的显存，若体验完整功能需要12G显存的显卡（ampere架构，也就是3060类的显卡），然后修改请修改配置文件 `local_whisper_config.toml`，接着直接挂机运行`WhisperTranslator_local.py`即可
+
+    - 运行结束后你可以得到：1、字幕文件和全文 2、翻译后的字幕文件和全文 3、全文摘要，当前默认放在翻译后的全文文件中
+
+    - 你可以根据需要选择是否开启翻译总结功能，具体请查看配置
 
 - 基于Google Colab的使用：
 
@@ -38,6 +50,9 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
     - 如果你使用的是local的AI工具，只需要等待模型下载完成后运行即可。
 
+- 我只想使用本地大模型翻译和总结一个外国文章：
+
+    - 本项目提供了单独运行翻译和总结功能，不需要转录，你只需要修改 `summay_everything.py` 的原始文件和输出文件地址，并运行即可。
 
 ## AI翻译
 
@@ -45,7 +60,7 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 用户也可以单独上传srt或ass文件来使用翻译模块。
 
-目前支持`chatGPT` 的翻译（正在做抽象接口以便支持所有其他的llm）
+目前支持 InternLM2 的翻译
 
 翻译后的文本将于原文合并在一行，以 `/N`分割，生成双语对照字幕。
 
@@ -79,5 +94,3 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 
 此外可以看到，在两种情况下英文单字都不会被分割。
-
-## 更新日志

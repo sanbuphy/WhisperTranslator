@@ -3,3 +3,5 @@ hf-cache/*
 temp/*
 __pycache__/*
 .env
+.vscode/
+whispertranslator/__pycache__/

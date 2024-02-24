@@ -59,7 +59,6 @@ class LocalLLM(BaseLLM):
         raise NotImplementedError("子类必须实现infer方法")
 
 # OnlineLLM
-from openai import OpenAI
 class ChatGPTLLM(OnlineLLM):
     def __init__(self, system_prompt: str, dst_language:str):
         """
@@ -71,10 +70,7 @@ class ChatGPTLLM(OnlineLLM):
 
     def _load_model(self):
         openai_key = os.getenv("OPENAI_TOKEN")
-        client = OpenAI(
-            api_key=self.key,
-            )
-        return client
+        # return client
 
     def infer(self, input: str) -> str:
         completion = self.model.chat.completions.create(
@@ -136,22 +132,34 @@ class DeepSeekLLM(OnlineLLM):
         raise NotImplementedError("子类必须实现infer方法")
     
 # LocalLLM
+os.environ['HF_HOME'] = '../temp/hf-cache'
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+from lmdeploy import pipeline, TurbomindEngineConfig,GenerationConfig
 class InternLM2(LocalLLM):
-    def __init__(self):
+    def __init__(self,model_path="",max_batch_size=1,session_len=4096):
         """
         实现模型的初始化以及初始参数设定
         """
-        self.model_path = None
-        self.device = None
-        self.system_prompt = None
-        self._load_model()
+        self.model_path = model_path
+        self.model = self._load_model(max_batch_size,session_len)
 
-    def _load_model(self):
-        raise NotImplementedError("子类必须实现_load_model方法")
+    def _load_model(self,max_batch_size,session_len):
+        engine_config = TurbomindEngineConfig(model_format='awq',max_batch_size=max_batch_size,session_len=session_len)
+        if self.model_path is not "":
+            pipe = pipeline(self.model_path, backend_config=engine_config)
+        else:
+            pipe = pipeline("internlm/internlm2-chat-7b-4bits", backend_config=engine_config)
+        return pipe
 
-    def infer(self, src_text: str) -> str:
-        """
-        根据初始 system prompt 设定执行推理，返回推理结果
-        """
-        raise NotImplementedError("子类必须实现infer方法")
+    def infer(self,system_prompt, src_text: str,gen_config:GenerationConfig) -> str:
+        response = self.model([system_prompt + src_text],gen_config)
+        return response
+    
+
+if __name__ == "__main__":
+    pass
+    # internLM2
+    internLM2 = InternLM2(session_len=2048)
+    result = internLM2.infer(system_prompt="你现在是一个翻译专家，请帮我把下列文字翻译成中文，直接给出翻译后结果：",src_text="hello this is my first time to visit here")
+    print(result[0].text)
     
