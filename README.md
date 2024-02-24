@@ -12,7 +12,7 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 ## 最近更新:
 
 2024.2.24:
-- 支持本地大模型，使用[InternLM2 7B](https://github.com/InternLM/InternLM)自动翻译时间轴、翻译全文、总结全文。你只需要在一个 12G 显存的显卡上就可以运行`WhisperTranslator_local.py`的所有操作。
+- 🤗支持本地大模型，使用[InternLM2 7B](https://github.com/InternLM/InternLM)自动翻译时间轴、翻译全文、总结全文。你只需要在一个 12G 显存的显卡上就可以运行`WhisperTranslator_local.py`的所有操作。
 
 2024.2.20:
 * release初版，提供转录和输出为分割文章。
@@ -20,7 +20,7 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 ## 环境安装
 
-- 如果你在本地运行，则需要运行 `pip install -r requirements.txt` 安装依赖,如果你想运行本地大模型进行翻译、总结工作，你需要额外安装大模型依赖 `pip install -r requirements_localllm.txt`
+- 如果你在本地运行，则需要运行 `pip install -r requirements.txt` 安装依赖,如果**你想运行本地大模型进行翻译、总结工作**，你需要额外安装大模型依赖 `pip install -r requirements_localllm.txt`
 
 ## 如何使用
 
