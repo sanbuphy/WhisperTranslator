@@ -26,7 +26,7 @@ WhisperTranslator 是基于 [N46Whisper](https://github.com/Ayanaminn/N46Whisper
 
 - 基于本地的使用（推荐）：
 
-    - 仅转录不翻译总结只需要6G的显存，若体验完整功能需要12G显存的显卡（ampere架构，也就是3060类的显卡），然后修改请修改配置文件 `local_whisper_config.toml`，接着直接挂机运行`WhisperTranslator_local.py`即可
+    - 仅转录不翻译总结只需要6G的显存，若体验完整功能需要12G显存的显卡（ampere架构，也就是3060类的显卡），然后修改请修改配置文件 [local_whisper_config.toml](local_whisper_config.toml)，接着直接 python 运行 [WhisperTranslator_local.py](WhisperTranslator_local.py) 即可
 
     - 运行结束后你可以得到：1、字幕文件和全文 2、翻译后的字幕文件和全文 3、全文摘要，当前默认放在翻译后的全文文件中
 
