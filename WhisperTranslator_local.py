@@ -159,6 +159,8 @@ for i in range(len(file_names)):
         summary_system_prompt = f"""
             总结下列文字的主题：
             """
+        
+    # get translated texts for srt ass file
     if if_translate:
         translate_results = []
         for i in results:
@@ -166,7 +168,7 @@ for i in range(len(file_names)):
             translate_segment_dict = {
                 'start': i['start'],
                 'end': i['end'],
-                'text': translate_text[0].text.split('\n')[-1]
+                'text': i['text'].replace(' ','') + r"\\N" + translate_text[0].text.split('\n')[-1]
             }
             translate_results.append(translate_segment_dict)
 
