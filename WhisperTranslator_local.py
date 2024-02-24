@@ -50,7 +50,7 @@ if not os.path.exists(export_dir):
 
 pprint.pprint(media_names)
 print("待处理文件数：", len(media_names))
-choice = input("请检查待处理文件是否正确，若错误清重新检查配置（y/n）")
+choice = input("请检查待处理文件是否正确，若错误清重新检查配置（y/n）\n Please verify if the files to be processed are correct. If incorrect, please recheck the configuration (y/n).")
 if choice.lower() != "y":
     exit()
 
@@ -158,7 +158,7 @@ for i in range(len(file_names)):
             把下列文字翻译成{target_language},修改和补充语序让他更符合{target_language}习惯，只返回给我结果：
             """
         summary_system_prompt = f"""
-            总结下列文字的主题：
+            用{target_language}总结下列文字的主题：
             """
         
     # get translated texts for srt ass file
@@ -169,7 +169,7 @@ for i in range(len(file_names)):
             translate_segment_dict = {
                 'start': i['start'],
                 'end': i['end'],
-                'text': i['text'].replace(' ','') + r"\\N" + translate_text[0].text.split('\n')[-1]
+                'text': i['text'] + r"\\N" + translate_text[0].text.split('\n')[-1]
             }
             translate_results.append(translate_segment_dict)
 
