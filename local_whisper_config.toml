@@ -1,5 +1,5 @@
 # 基础参数设置 | Basic Parameter Settings
-work_dir = '修改你的地址' # 待处理文件所在文件夹 | Folder containing the files to be processed
+work_dir = 'VIDEO PATH' # 待处理文件所在文件夹 | Folder containing the files to be processed
 export_dir = './temp' # output folder
 file_type = "audio"
 language = "en" # 原文语言 zh en jp | Original Language: zh en jp
