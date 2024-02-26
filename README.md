@@ -11,8 +11,11 @@ The output files are in ass or srt format, preformatted for a specific subtitle 
 ## Feature
 
 ⭐ Converting videos and audio into corresponding language text.
+
 ⭐ Translating transcribed text into any language (using local large models).
+
 ⭐ Outputting full text and timeline captions after transcription.
+
 ⭐ Summarizing the full content of videos (using local large models).
 
 ## Recent Updates:
