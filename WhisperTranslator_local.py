@@ -169,7 +169,7 @@ for i in range(len(file_names)):
             translate_segment_dict = {
                 'start': i['start'],
                 'end': i['end'],
-                'text': i['text'] + r"\\N" + translate_text[0].text.split('\n')[-1]
+                'text': i['text'] + r"\\N" + translate_text.text.split('\n')[-1]
             }
             translate_results.append(translate_segment_dict)
 
@@ -187,14 +187,15 @@ for i in range(len(file_names)):
         translate_filename = Path(export_dir) / translate_filename
         with open(translate_filename, 'w', encoding='utf-8') as file:
             for chunk in new_paragraphs:
+                chunk = chunk.replace("\n", ".")
                 chunk_translate = internLM2.infer(translator_system_prompt,f"{chunk}" ,gen_config)
-                chunk_translate[0].text = chunk_translate[0].text.replace(" ", "") # 去除空格
-                if chunk_translate[0].text.count(chunk_translate[0].text[-4:]) > 10:
+                chunk_translate.text = chunk_translate.text.replace(" ", "") # 去除空格
+                if chunk_translate.text.count(chunk_translate.text[-4:]) > 10:
                     print("出现重复！")
                     chunk_translate = internLM2.infer(translator_system_prompt,f"{chunk}" ,gen_config)
-                print(chunk, '\n' ,chunk_translate[0].text.split('\n')[-1])
+                print(chunk, '\n' ,chunk_translate.text.split('\n')[-1])
                 file.write(
-                    chunk_translate[0].text.split('\n')[-1] +'\n')
+                    chunk_translate.text.split('\n')[-1] +'\n')
 
     #Save srt
     subs = pysubs2.load_from_whisper(results)
@@ -222,7 +223,7 @@ for i in range(len(file_names)):
     if if_summary:
         with open(translate_filename, 'r', encoding='utf-8') as file:
             content = file.read()
-            summary_text = internLM2.infer(summary_system_prompt,str(content).replace(' ','').replace('\n',''),gen_config)[0].text 
+            summary_text = internLM2.infer(summary_system_prompt,str(content).replace(' ','').replace('\n',''),gen_config).text 
             print("总结结果：",summary_text)
             content = summary_text + '\n\n' + content
         with open(translate_filename, "w") as file:

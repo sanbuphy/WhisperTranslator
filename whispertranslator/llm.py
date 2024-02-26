@@ -152,7 +152,16 @@ class InternLM2(LocalLLM):
         return pipe
 
     def infer(self,system_prompt, src_text: str,gen_config:GenerationConfig) -> str:
-        response = self.model([system_prompt + src_text],gen_config)
+        prompts = [
+        {
+            'role': 'system',
+            'content': system_prompt
+        },
+        {
+            'role': 'user',
+            'content': src_text
+        }]
+        response = self.model(prompts,gen_config)
         return response
     
 
