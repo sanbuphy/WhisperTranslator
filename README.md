@@ -8,15 +8,15 @@ This application utilizes the optimized deployment of the AI speech recognition 
 
 The output files are in ass or srt format, preformatted for a specific subtitle group, and can be directly imported into [Aegisub](https://github.com/Aegisub/Aegisub) for further translation and timing adjustments. You have the option to enable full text extraction and summarization.
 
-## Feature
+## ⭐ Feature
 
-⭐ Converting videos and audio into corresponding language text.
+- Converting videos and audio into corresponding language text.
 
-⭐ Translating transcribed text into any language (using local large models).
+- Translating transcribed text into any language (using local large models).
 
-⭐ Outputting full text and timeline captions after transcription.
+- Outputting full text and timeline captions after transcription.
 
-⭐ Summarizing the full content of videos (using local large models).
+- Summarizing the full content of videos (using local large models).
 
 ## Recent Updates:
 
