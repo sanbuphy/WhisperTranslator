@@ -229,7 +229,8 @@ for i in range(len(file_names)):
         with open(translate_filename, "w") as file:
             file.write(content)
     import gc
-    del internLM2
+    if if_translate or if_summary:
+        del internLM2
     gc.collect()
     torch.cuda.empty_cache()
 
